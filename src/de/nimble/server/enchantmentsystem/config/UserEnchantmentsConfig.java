@@ -65,21 +65,14 @@ public class UserEnchantmentsConfig extends Config {
 	 */
 	private Enchantment createEnchantment(String enchantmentName) {
 		Enchantment enchantment = null;
-		
-		String displayName = getDisplayName(enchantmentName);
-		System.out.println("display: " + enchantmentName);
-		byte level = getLevel(enchantmentName);
 		EnchantmentType type = getType(enchantmentName);
-		String description = getDescription(enchantmentName);
 		
 		switch(type) {
 		case DAMAGE:
 			enchantment = new DamageEnchantment(enchantmentName);
-			((DamageEnchantment) enchantment).setMultiplier(getFileConfiguration().getDouble(enchantmentName + ".multiplier"));
 			break;
 		case HEAL:
 			enchantment = new HealEnchantment(enchantmentName);
-			((HealEnchantment) enchantment).setMultiplier(getFileConfiguration().getDouble(enchantmentName + ".multiplier"));
 			break;
 		case NONE:
 			break;
@@ -87,10 +80,6 @@ public class UserEnchantmentsConfig extends Config {
 			break;
 		}
 		
-		enchantment.setDisplayName(displayName);
-		enchantment.setLevel(level);
-		enchantment.setDescription(description);
-			
 		return enchantment;
 	}
 	
