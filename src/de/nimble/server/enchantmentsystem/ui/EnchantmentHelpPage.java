@@ -3,7 +3,6 @@ package de.nimble.server.enchantmentsystem.ui;
 import org.bukkit.entity.Player;
 
 import de.nimble.server.NimbleServer;
-import de.nimble.server.enchantmentsystem.enchants.Enchantment;
 import de.nimble.server.ui.chat.ClickableText;
 
 public class EnchantmentHelpPage {
@@ -18,13 +17,14 @@ public class EnchantmentHelpPage {
 	public void send(Player player) {
 		ClickableText helpPage = new ClickableText();
 		
-		for(Enchantment enchantment : NimbleServer.userEnchantmentConfig.getEnchantments()) {
+		NimbleServer.userEnchantmentConfig.getEnchantments().stream().forEach(enchantment -> {
 			helpPage.add(
 				enchantment.getEnchantmentName(), 
 				"/enchantments get " + enchantment.getEnchantmentName(), 
 				"Displayname: " + enchantment.getDisplayName() + " - Level: " + enchantment.getLevel()
 			);
-		}
+		});
+		
 		helpPage.send(player);
 	}
 	

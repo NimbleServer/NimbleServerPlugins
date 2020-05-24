@@ -37,7 +37,6 @@ public class UserEnchantmentsConfig extends Config {
 		List<Enchantment> enchantments = new ArrayList<Enchantment>();
 		
 		for(String enchantmentName : getFileConfiguration().getKeys(false)) {
-			System.out.println("1: " + enchantmentName);
 			enchantments.add(createEnchantment(enchantmentName));
 		}
 		
@@ -50,12 +49,10 @@ public class UserEnchantmentsConfig extends Config {
 	 * @return EnchantmentByName
 	 */
 	public Enchantment getEnchantmentByName(String enchantmentName) {
-		
 		for(String key : getFileConfiguration().getKeys(false)) {
 			if(!(key.equals(enchantmentName))) {
 				continue;
 			}
-			
 			return createEnchantment(enchantmentName);
 		}
 		return null;
@@ -67,21 +64,21 @@ public class UserEnchantmentsConfig extends Config {
 	 * @return enchantment
 	 */
 	private Enchantment createEnchantment(String enchantmentName) {
-		System.out.println("2: " + enchantmentName);
+		Enchantment enchantment = null;
+		
 		String displayName = getDisplayName(enchantmentName);
+		System.out.println("display: " + enchantmentName);
 		byte level = getLevel(enchantmentName);
 		EnchantmentType type = getType(enchantmentName);
 		String description = getDescription(enchantmentName);
-			
-		Enchantment enchantment = null;
-			
+		
 		switch(type) {
 		case DAMAGE:
-			enchantment = new DamageEnchantment();
+			enchantment = new DamageEnchantment(enchantmentName);
 			((DamageEnchantment) enchantment).setMultiplier(getFileConfiguration().getDouble(enchantmentName + ".multiplier"));
 			break;
 		case HEAL:
-			enchantment = new HealEnchantment();
+			enchantment = new HealEnchantment(enchantmentName);
 			((HealEnchantment) enchantment).setMultiplier(getFileConfiguration().getDouble(enchantmentName + ".multiplier"));
 			break;
 		case NONE:
@@ -90,7 +87,6 @@ public class UserEnchantmentsConfig extends Config {
 			break;
 		}
 		
-		enchantment.setEnchantmentName(enchantmentName);
 		enchantment.setDisplayName(displayName);
 		enchantment.setLevel(level);
 		enchantment.setDescription(description);
@@ -130,7 +126,6 @@ public class UserEnchantmentsConfig extends Config {
 	}
 	
 	public EnchantmentType getType(String enchantmentName) {
-		System.out.println("3: " + enchantmentName);
 		return EnchantmentType.getTypeByName(getFileConfiguration().getString(enchantmentName + ".type"));
 	}
 	

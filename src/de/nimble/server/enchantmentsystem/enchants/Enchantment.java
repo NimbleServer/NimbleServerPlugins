@@ -1,6 +1,5 @@
 package de.nimble.server.enchantmentsystem.enchants;
 
-import org.bukkit.ChatColor;
 import org.bukkit.event.Event;
 
 import de.nimble.server.NimbleServer;
@@ -8,6 +7,14 @@ import de.nimble.server.NimbleServer;
 public abstract class Enchantment {
 	
 	private String enchantmentName;
+	
+//	public Enchantment() {
+//		
+//	}
+	
+	public Enchantment(String enchantmentName) {
+		this.enchantmentName = enchantmentName;
+	}
 	
 	/**
 	 * onUse method gets implementated in class that extends Enchantment
@@ -21,7 +28,7 @@ public abstract class Enchantment {
 	 * @return String
 	 */
 	public String getDisplayName() {
-		return ChatColor.translateAlternateColorCodes('&', NimbleServer.userEnchantmentConfig.getDisplayName(enchantmentName));
+		return NimbleServer.userEnchantmentConfig.getDisplayName(enchantmentName);
 	}
 	
 	/**
@@ -69,7 +76,7 @@ public abstract class Enchantment {
 	 * @return
 	 */
 	public String getDescription() {
-		return ChatColor.translateAlternateColorCodes('&', NimbleServer.userEnchantmentConfig.getDescription(enchantmentName));
+		return NimbleServer.userEnchantmentConfig.getDescription(enchantmentName);
 	}
 	/**
 	 * saves the description as string in config with the given enchantmentname

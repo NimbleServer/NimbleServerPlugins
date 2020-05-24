@@ -37,6 +37,7 @@ public class EnchantmentBuilder {
 		
 		List<String> lore = new ArrayList<String>();
 		lore.add("Level: " + enchantment.getLevel());
+		lore.add("Type: " + NimbleServer.userEnchantmentConfig.getType(enchantmentName));
 		lore.add(enchantment.getDescription());
 		
 		meta.setLore(lore);

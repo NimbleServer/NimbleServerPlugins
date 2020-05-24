@@ -5,6 +5,10 @@ import de.nimble.server.enchantmentsystem.enchants.Enchantment;
 
 public abstract class PlayerEffectEnchantment extends Enchantment {
 	
+	public PlayerEffectEnchantment(String enchantmentName) {
+		super(enchantmentName);
+	}
+
 	/**
 	 * reads multiplier from config with the given enchantmentname
 	 * gets multiplied with the incoming damage which is added to the level times 1.5 
@@ -20,6 +24,7 @@ public abstract class PlayerEffectEnchantment extends Enchantment {
 	 */
 	public void setMultiplier(double multiplier) {
 		NimbleServer.userEnchantmentConfig.getFileConfiguration().set(getEnchantmentName() + ".multiplier", multiplier);
+		NimbleServer.userEnchantmentConfig.save();
 	}
 	
 }

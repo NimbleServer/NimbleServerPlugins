@@ -9,6 +9,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
  */
 public class DamageEnchantment extends PlayerEffectEnchantment {
 	
+	public DamageEnchantment(String enchantmentName) {
+		super(enchantmentName);
+	}
+
 	/**
 	 * Overrides onUse method of base class "Enchantment"
 	 * 
