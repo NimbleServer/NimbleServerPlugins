@@ -1,0 +1,12 @@
+name: NimbleServer
+version: 0.1
+description: Nimbles server plugins
+author: nimble
+
+main: de.nimble.server.NimbleServer
+
+commands:
+  enchantments:
+    usage: /<command>
+    description: Enchantment command
+    aliases: [ec]
