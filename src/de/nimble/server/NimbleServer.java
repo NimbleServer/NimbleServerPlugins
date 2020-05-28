@@ -6,14 +6,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.nimble.server.enchantmentsystem.commands.EnchantmentCommand;
 import de.nimble.server.enchantmentsystem.config.EnchantmentConfig;
 import de.nimble.server.enchantmentsystem.config.UserEnchantmentsConfig;
+import de.nimble.server.itemsystem.config.ItemConfig;
+import de.nimble.server.itemsystem.config.NimbleItemConfig;
 
 public class NimbleServer extends JavaPlugin {
 	
-	/**
-	 * config variable that is available the entire time
+	/*
+	 * Enchantment configs
 	 */
 	public static UserEnchantmentsConfig userEnchantmentConfig = null;
 	public static EnchantmentConfig enchantmentConfig = null;
+	
+	/*
+	 * Item configs
+	 */
+	public static NimbleItemConfig nimbleItemConfig = null;
+	public static ItemConfig itemConfig = null;
 	
 	public void onEnable() {
 		init();
@@ -32,7 +40,6 @@ public class NimbleServer extends JavaPlugin {
 	}
 	
 	private void registerEvents(PluginManager pm) {
-		
 	}
 	
 	private void loadCommands() {
@@ -45,8 +52,12 @@ public class NimbleServer extends JavaPlugin {
 	}
 	
 	private void loadConfigFiles() {
-		 userEnchantmentConfig = UserEnchantmentsConfig.getInstance();
-		 enchantmentConfig = EnchantmentConfig.getInstance();
+		// enchantment configs
+		userEnchantmentConfig = (UserEnchantmentsConfig) UserEnchantmentsConfig.getInstance();
+		enchantmentConfig = (EnchantmentConfig) EnchantmentConfig.getInstance();
+		
+		// item configs
+		nimbleItemConfig = (NimbleItemConfig) NimbleItemConfig.getInstance();
 	}
 	
 }
