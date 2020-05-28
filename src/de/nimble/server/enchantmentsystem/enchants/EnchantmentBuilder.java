@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import de.nimble.server.NimbleServer;
+import de.nimble.server.customtags.NimbleTag;
 
 /**
  * class to get custom enchantment books
@@ -31,20 +32,27 @@ public class EnchantmentBuilder {
 	 * @return itemstack with finished enchantment
 	 */
 	public ItemStack createEnchantmentBook() {
-		ItemStack book = new ItemStack(material);
-		ItemMeta meta = book.getItemMeta();
+		ItemStack item = new ItemStack(material);
+		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(enchantment.getDisplayName());
 		
+		// NBT ID
+		NimbleTag tag = new NimbleTag("id", enchantment.getID());
+		item = tag.create(item);
+		enchantment.addTag(tag);
+		
 		List<String> lore = new ArrayList<String>();
-		lore.add("Level: " + enchantment.getLevel());
 		lore.add("Type: " + NimbleServer.userEnchantmentConfig.getType(enchantmentName));
 		lore.add(enchantment.getDescription());
 		
+		// String id = NimbleServer.userEnchantmentConfig.getEnchantmentByName(enchantmentName).getTag("id").getValue();
+		lore.add("ID: " + tag.getValue());
+		
 		meta.setLore(lore);
 		
-		book.setItemMeta(meta);
+		item.setItemMeta(meta);
 		
-		return book;
+		return item;
 	}
 	
 	public EnchantmentBuilder setEnchantment() {
