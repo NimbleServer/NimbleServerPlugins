@@ -21,7 +21,7 @@ public class EnchantmentHelpPage {
 			helpPage.add(
 				enchantment.getEnchantmentName(), 
 				"/enchantments get " + enchantment.getEnchantmentName(), 
-				"Displayname: " + enchantment.getDisplayName() + " - Level: " + enchantment.getLevel()
+				"Displayname: " + enchantment.getDisplayName()
 			);
 		});
 		
