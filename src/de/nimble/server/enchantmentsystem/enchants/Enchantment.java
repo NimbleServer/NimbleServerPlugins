@@ -1,19 +1,21 @@
 package de.nimble.server.enchantmentsystem.enchants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.event.Event;
 
 import de.nimble.server.NimbleServer;
+import de.nimble.server.customtags.NimbleTag;
 
 public abstract class Enchantment {
 	
 	private String enchantmentName;
-	
-//	public Enchantment() {
-//		
-//	}
+	private List<NimbleTag> tags;
 	
 	public Enchantment(String enchantmentName) {
 		this.enchantmentName = enchantmentName;
+		this.tags = new ArrayList<NimbleTag>();
 	}
 	
 	/**
@@ -24,11 +26,55 @@ public abstract class Enchantment {
 	public abstract void onUse(Event event);
 	
 	/**
+	 * adds a customtag to the list of tags an enchantment has
+	 * @param NimbleTag
+	 */
+	public void addTag(NimbleTag tag) {
+		tags.add(tag);
+	}
+	
+	/**
+	 * searches a tag for its name in the list of tags
+	 * 
+	 * @param name
+	 * @return null or tag
+	 */
+	public NimbleTag getTag(String name) {
+		for(NimbleTag tag : tags) {
+			if(tag.getTagName().equals(name)) {
+				return tag;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * returns all tags
+	 * @return tags
+	 */
+	public List<NimbleTag> getTags() {
+		return this.tags;
+	}
+	
+	public String getID() {
+		return NimbleServer.userEnchantmentConfig.getID(enchantmentName);
+	}
+	
+	public void setID(String id) {
+		NimbleServer.userEnchantmentConfig.setID(enchantmentName, id);
+	}
+	
+	/**
 	 * reads displayname from config file with the given enchantmentname 
 	 * @return String
 	 */
 	public String getDisplayName() {
-		return NimbleServer.userEnchantmentConfig.getDisplayName(enchantmentName);
+		String name = NimbleServer.userEnchantmentConfig.getDisplayName(enchantmentName);
+		if(name == null || name.equals("")) {
+			return "";
+		} else {
+			return name;
+		}
 	}
 	
 	/**
@@ -56,27 +102,16 @@ public abstract class Enchantment {
 	}
 	
 	/**
-	 * reads level from config file with the given enchantmentname
-	 * @return level as byte
-	 */
-	public byte getLevel() {
-		return NimbleServer.userEnchantmentConfig.getLevel(enchantmentName);
-	}
-	
-	/**
-	 * saves the level as byte in config with the given enchantmentname
-	 * @param level as byte
-	 */
-	public void setLevel(byte level) {
-		NimbleServer.userEnchantmentConfig.setLevel(enchantmentName, level);
-	}
-	
-	/**
 	 * reads description from config file with the given enchantmentname
 	 * @return
 	 */
 	public String getDescription() {
-		return NimbleServer.userEnchantmentConfig.getDescription(enchantmentName);
+		String description = NimbleServer.userEnchantmentConfig.getDescription(enchantmentName);
+		if(description == null || description.equals("")) {
+			return "";
+		} else {
+			return description;
+		}
 	}
 	/**
 	 * saves the description as string in config with the given enchantmentname
