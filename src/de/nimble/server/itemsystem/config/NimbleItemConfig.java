@@ -12,17 +12,26 @@ import de.nimble.server.customtags.NimbleTag;
 import de.nimble.server.enchantmentsystem.enchants.Enchantment;
 
 public class NimbleItemConfig extends Config {
-
-	private NimbleItemConfig(String fileName) {
+	
+	public static NimbleItemConfig config = null;
+	
+	public static NimbleItemConfig getInstance() {
+		if(config == null) {
+			config = new NimbleItemConfig();
+		}
+		return config;
+	}
+	
+	private NimbleItemConfig() {
 		super("items/NimbleItems");
 	}
 	
-	public void setID(String itemName, byte id) {
+	public void setID(String itemName, String id) {
 		set(itemName + ".id", id);
 	}
 	
-	public byte getID(String itemName) {
-		return get(itemName + ".id");
+	public String getID(String itemName) {
+		return getString(itemName + ".id");
 	}
 	
 	public void setDisplayName(String itemName, String displayName) {
@@ -30,7 +39,7 @@ public class NimbleItemConfig extends Config {
 	}
 	
 	public String getDisplayName(String itemName) {
-		return get(itemName + ".displayName");
+		return getString(itemName + ".displayName");
 	}
 	
 	public void setMaterial(String itemName, Material material) {
@@ -42,7 +51,7 @@ public class NimbleItemConfig extends Config {
 	}
 	
 	public Material getMaterial(String itemName) {
-		return Material.getMaterial(get(itemName + ".material"));
+		return Material.getMaterial(getString(itemName + ".material"));
 	}
 	
 	public void setEnchantments(String itemName, List<Enchantment> enchantments) {
