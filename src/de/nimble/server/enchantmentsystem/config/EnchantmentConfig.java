@@ -6,20 +6,17 @@ import de.nimble.server.config.Config;
 
 public class EnchantmentConfig extends Config {
 	
-	private static EnchantmentConfig config;
+	public static EnchantmentConfig config = null;
 	
-	/**
-	 * @return only instance of EnchantmentConfig
-	 */
 	public static EnchantmentConfig getInstance() {
 		if(config == null) {
-			config = new EnchantmentConfig("EnchantmentConfig");
+			config = new EnchantmentConfig();
 		}
 		return config;
 	}
 	
-	private EnchantmentConfig(String fileName) {
-		super(fileName);
+	private EnchantmentConfig() {
+		super("enchantments/EnchantmentConfig");
 	}
 	
 	public void setMaxLevel(byte maxLevel) {
