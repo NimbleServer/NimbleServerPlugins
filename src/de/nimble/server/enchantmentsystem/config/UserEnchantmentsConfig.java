@@ -1,6 +1,5 @@
 package de.nimble.server.enchantmentsystem.config;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,21 +11,17 @@ import de.nimble.server.enchantmentsystem.enchants.types.playereffect.HealEnchan
 
 public class UserEnchantmentsConfig extends Config {
 	
-	private static UserEnchantmentsConfig config;
+	public static UserEnchantmentsConfig config = null;
 	
-	/**
-	 *  
-	 * @return only instance of UserEnchantmentConfig
-	 */
 	public static UserEnchantmentsConfig getInstance() {
 		if(config == null) {
-			config = new UserEnchantmentsConfig("CustomEnchantments");
+			config = new UserEnchantmentsConfig();
 		}
 		return config;
 	}
 	
-	private UserEnchantmentsConfig(String fileName) {
-		super(fileName);
+	private UserEnchantmentsConfig() {
+		super("enchantments/NimbleEnchantments");
 	}
 	
 	/**
@@ -83,57 +78,36 @@ public class UserEnchantmentsConfig extends Config {
 		return enchantment;
 	}
 	
-	public void save() {
-		try {
-			getFileConfiguration().save(getFile());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public void setID(String enchantmentName, String id) {
-		getFileConfiguration().set(enchantmentName  + ".id", id);
-		save();
+		set(enchantmentName  + ".id", id);
 	}
 	
 	public String getID(String enchantmentName) {
-		return getFileConfiguration().getString(enchantmentName + ".id");
+		return getString(enchantmentName + ".id");
 	}
 	
 	public void setDisplayName(String enchantmentName, String displayName) {
-		getFileConfiguration().set(enchantmentName + ".displayName", displayName);
-		save();
+		set(enchantmentName + ".displayName", displayName);
 	}
 	
 	public String getDisplayName(String enchantmentName) {
-		return getFileConfiguration().getString(enchantmentName + ".displayName");
-	}
-	
-	public void setLevel(String enchantmentName, byte level) {
-		getFileConfiguration().set(enchantmentName + ".level", level);
-		save();
-	}
-	
-	public byte getLevel(String enchantmentName) {
-		return (byte) getFileConfiguration().getInt(enchantmentName + ".level");
+		return getString(enchantmentName + ".displayName");
 	}
 	
 	public void setType(String enchantmentName, EnchantmentType type) {
-		getFileConfiguration().set(enchantmentName + ".type", type);
-		save();
+		set(enchantmentName + ".type", type);
 	}
 	
 	public EnchantmentType getType(String enchantmentName) {
-		return EnchantmentType.getTypeByName(getFileConfiguration().getString(enchantmentName + ".type"));
+		return EnchantmentType.getTypeByName(getString(enchantmentName + ".type"));
 	}
 	
 	public void setDescription(String enchantmentName, String description) {
-		getFileConfiguration().set(enchantmentName + ".description", description);
-		save();
+		set(enchantmentName + ".description", description);
 	}
 	
 	public String getDescription(String enchantmentName) {
-		return getFileConfiguration().getString(enchantmentName + ".description");
+		return getString(enchantmentName + ".description");
 	}
 	
 }
