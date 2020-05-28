@@ -1,20 +1,21 @@
 package de.nimble.server.itemsystem.items;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Material;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
+import de.nimble.server.NimbleServer;
 import de.nimble.server.customtags.NimbleTag;
 import de.nimble.server.enchantmentsystem.enchants.Enchantment;
 
 public abstract class NimbleItem {
 	
-	private byte id;
+	private String itemName;
 	
-	private Material material;
 	private ItemStack item;
 	
 	private List<Enchantment> enchantments;
@@ -32,21 +33,97 @@ public abstract class NimbleItem {
 	 */
 	public abstract void onUse(Event event);
 	
-	public void addEnchantment(Enchantment enchantment) {
-		this.enchantments.add(enchantment);
+	/**
+	 * saves id in config
+	 * @param id
+	 */
+	public void setID(String id) {
+		NimbleServer.nimbleItemConfig.setID(itemName, id);
 	}
 	
+	/**
+	 * reads id from config by the given itemname
+	 * @return String id
+	 */
+	public String getID() {
+		return NimbleServer.nimbleItemConfig.getID(itemName);
+	}
+	
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+	
+	public String getItemName() {
+		return this.itemName;
+	}
+	
+	/**
+	 * saves displayname in config by the given itemname
+	 * @param displayName
+	 */
+	public void setDisplayName(String displayName) {
+		NimbleServer.nimbleItemConfig.setDisplayName(itemName, displayName);
+	}
+	
+	/**
+	 * @return displayname for the item by the given itemname
+	 */
+	public String getDisplayName() {
+		return NimbleServer.nimbleItemConfig.getDisplayName(itemName);
+	}
+	
+	/**
+	 * saves material in config by the given itemname
+	 * @param material enum
+	 */
+	public void setMaterial(Material material) {
+		NimbleServer.nimbleItemConfig.setMaterial(itemName, material);
+	}
+	
+	/**
+	 * saves material in config by the given itemname
+	 * @param String material
+	 */
+	public void setMaterial(String material) {
+		NimbleServer.nimbleItemConfig.setMaterial(material, material);
+	}
+	
+	/**
+	 * @return material enum by the given itemname
+	 */
+	public Material getMaterial() {
+		return NimbleServer.nimbleItemConfig.getMaterial(itemName);
+	}
+	
+	/**
+	 * saves enchantment list in config
+	 * @param enchantment array
+	 */
+	public void addEnchantment(Enchantment... enchantment) {
+		Arrays.asList(enchantment).stream().forEach(e -> enchantments.add(e));
+		NimbleServer.nimbleItemConfig.setEnchantments(itemName, enchantments);
+	}
+	
+	/**
+	 * @return list of enchantments given by the itemname
+	 */
 	public List<Enchantment> getEnchantments() {
-		return this.enchantments;
+		return NimbleServer.nimbleItemConfig.getEnchantments(itemName);
 	}
 	
-	public ItemStack getItem() {
-		ItemStack item = new ItemStack(material);
-		return item;
-	}
-	
+	/**
+	 * Initializes item
+	 * @param ItemStack item
+	 */
 	public void setItem(ItemStack item) {
 		this.item = item;
+	}
+	
+	/**
+	 * @return Item
+	 */
+	public ItemStack getItem() {
+		return item;
 	}
 	
 	/**
@@ -58,6 +135,8 @@ public abstract class NimbleItem {
 		setItem(tag.create(getItem()));
 		
 		tags.add(tag);
+		
+		NimbleServer.nimbleItemConfig.setTags(tagValue, tags);
 	}
 	
 	/**
@@ -67,7 +146,7 @@ public abstract class NimbleItem {
 	 * @return null or tag
 	 */
 	public NimbleTag getTag(String name) {
-		for(NimbleTag tag : tags) {
+		for(NimbleTag tag : NimbleServer.nimbleItemConfig.getTags(itemName)) {
 			if(tag.getTagName().equals(name)) {
 				return tag;
 			}
@@ -76,11 +155,10 @@ public abstract class NimbleItem {
 	}
 	
 	/**
-	 * returns all tags
-	 * @return tags
+	 * @return all tags read from config by the given itemname
 	 */
 	public List<NimbleTag> getTags() {
-		return this.tags;
+		return NimbleServer.nimbleItemConfig.getTags(itemName);
 	}
 	
 }
