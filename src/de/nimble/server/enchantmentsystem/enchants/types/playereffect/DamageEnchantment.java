@@ -23,7 +23,7 @@ public class DamageEnchantment extends PlayerEffectEnchantment {
 	public void onUse(Event ev) {
 		EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) ev;
 		// damage to config
-		event.setDamage(event.getDamage() * (getMultiplier() + (getLevel() * 1.5) ));
+		event.setDamage(event.getDamage() * (getMultiplier() + 1.5));
 		
 	}
 
