@@ -91,6 +91,15 @@ public class UserEnchantmentsConfig extends Config {
 		}
 	}
 	
+	public void setID(String enchantmentName, String id) {
+		getFileConfiguration().set(enchantmentName  + ".id", id);
+		save();
+	}
+	
+	public String getID(String enchantmentName) {
+		return getFileConfiguration().getString(enchantmentName + ".id");
+	}
+	
 	public void setDisplayName(String enchantmentName, String displayName) {
 		getFileConfiguration().set(enchantmentName + ".displayName", displayName);
 		save();
