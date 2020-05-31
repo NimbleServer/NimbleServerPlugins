@@ -32,6 +32,14 @@ public class NimbleTag {
 		return false;
 	}
 	
+	public static String getTag(ItemStack item, String name) {
+		net.minecraft.server.v1_14_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
+		if(nmsItem.getTag().getString(name) != null && (!(nmsItem.getTag().getString(name).equals("")))) {
+			return nmsItem.getTag().getString(name);
+		}
+		return "-1";
+	}
+	
 	public void setTagName(String tagName) {
 		this.tagName = tagName;
 	}
