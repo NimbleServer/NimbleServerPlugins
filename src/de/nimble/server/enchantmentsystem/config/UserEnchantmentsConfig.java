@@ -11,7 +11,7 @@ import de.nimble.server.enchantmentsystem.enchants.types.playereffect.HealEnchan
 
 public class UserEnchantmentsConfig extends Config {
 	
-	public static UserEnchantmentsConfig config = null;
+	private static UserEnchantmentsConfig config = null;
 	
 	public static UserEnchantmentsConfig getInstance() {
 		if(config == null) {
