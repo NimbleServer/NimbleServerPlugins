@@ -28,7 +28,7 @@ public class Config {
 		this.fc = YamlConfiguration.loadConfiguration(file);
 	}
 	
-	protected<T> void set(String key, T value) {
+	public <T> void set(String key, T value) {
 		fc.set(key, value);
 		save();
 	}
