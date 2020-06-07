@@ -1,20 +1,17 @@
 package de.nimble.server.enchantmentsystem.commands;
 
-import java.sql.Connection;
-
-import de.nimble.server.parser.LoreParser;
+import de.nimble.server.NimbleServer;
+import de.nimble.server.enchantmentsystem.enchants.NimbleEnchantmentCreator;
+import de.nimble.server.enchantmentsystem.enchants.types.EnchantmentType;
+import de.nimble.server.enchantmentsystem.ui.EnchantmentHelpPage;
+import de.nimble.server.sql.NimbleConnection;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.nimble.server.NimbleServer;
-import de.nimble.server.enchantmentsystem.config.UserEnchantmentSQL;
-import de.nimble.server.enchantmentsystem.enchants.NimbleEnchantmentCreator;
-import de.nimble.server.enchantmentsystem.enchants.types.EnchantmentType;
-import de.nimble.server.enchantmentsystem.ui.EnchantmentHelpPage;
-import de.nimble.server.sql.NimbleConnection;
+import java.sql.Connection;
 
 public class EnchantmentCommand implements CommandExecutor {
 
@@ -36,10 +33,14 @@ public class EnchantmentCommand implements CommandExecutor {
 
         player.getInventory().addItem(creator.createEnchantment());
         player.updateInventory();
+      } else if (args[0].equalsIgnoreCase("delete")) {
+        NimbleServer.enchantmentManager.deleteEnchantment(Integer.parseInt(args[1]));
+        NimbleServer.enchantmentManager.clear();
+        NimbleServer.userEnchantmentsSql.getEnchantments().stream()
+            .forEach(e -> NimbleServer.enchantmentManager.addEnchantment(e));
       }
     } else if (args.length > 2) {
       if (args[0].equalsIgnoreCase("create")) {
-        // solve with book and quirrel maybe?
         Connection con = NimbleConnection.getConnection("UserEnchantments");
         NimbleServer.userEnchantmentsSql.createNewEnchantment(
             con,
