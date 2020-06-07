@@ -1,4 +1,4 @@
-package de.nimble.server.mysql;
+package de.nimble.server.sql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
