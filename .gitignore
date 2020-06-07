@@ -6,7 +6,7 @@
 bin/*
 *.db
 *.sqlite
-lina\*
+blubb/*
 .idea/*
 *.iml
 src/META-INF/*
