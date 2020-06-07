@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 
 import de.nimble.server.NimbleServer;
 import de.nimble.server.customtags.NimbleTag;
-import de.nimble.server.enchantmentsystem.enchants.Enchantment;
 
 public abstract class NimbleItem {
 	
