@@ -30,9 +30,13 @@ public class LoreParser {
   }
 
   public LoreParser(ItemStack item) {
-    this.values = new HashMap<>();
-    this.lore = item.getItemMeta().getLore();
-    loadComponentsToMap();
+    if (item != null) {
+      this.values = new HashMap<>();
+      if (item.getItemMeta().getLore() != null) {
+        this.lore = item.getItemMeta().getLore();
+        loadComponentsToMap();
+      }
+    }
   }
 
   private void loadComponentsToMap() {
