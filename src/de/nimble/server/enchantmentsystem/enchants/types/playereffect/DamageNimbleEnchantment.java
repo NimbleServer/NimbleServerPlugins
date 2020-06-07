@@ -5,26 +5,23 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 /**
  * DamageEnchantment class
+ *
  * @author master
  */
-public class DamageEnchantment extends PlayerEffectEnchantment {
-	
-	public DamageEnchantment(String enchantmentName) {
-		super(enchantmentName);
-	}
+public class DamageNimbleEnchantment extends PlayerEffectNimbleEnchantment {
 
-	/**
-	 * Overrides onUse method of base class "Enchantment"
-	 * 
-	 *  @param EntityDamageByEntityEvent
-	 *  @return void
-	 */
-	@Override
-	public void onUse(Event ev) {
-		EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) ev;
-		// damage to config
-		event.setDamage(event.getDamage() * (getMultiplier() + 1.5));
-		
-	}
+  public DamageNimbleEnchantment() {
+    super();
+  }
 
+  /**
+   * Overrides onUse method of base class "NimbleEnchantment"
+   *
+   * @param EntityDamageByEntityEvent
+   */
+  @Override
+  public void onUse(Event ev) {
+    EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) ev;
+    event.setDamage(event.getDamage() * (getMultiplier() + 1.5));
+  }
 }
