@@ -1,7 +1,6 @@
 package de.nimble.server.enchantmentsystem.enchants.types.playereffect;
 
 import org.bukkit.event.Event;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 /**
  * DamageEnchantment class
@@ -9,6 +8,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
  * @author master
  */
 public class DamageNimbleEnchantment extends PlayerEffectNimbleEnchantment {
+
+  private double damage;
 
   public DamageNimbleEnchantment() {
     super();
@@ -21,7 +22,14 @@ public class DamageNimbleEnchantment extends PlayerEffectNimbleEnchantment {
    */
   @Override
   public void onUse(Event ev) {
-    EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) ev;
-    event.setDamage(event.getDamage() * (getMultiplier() + 1.5));
+    damage = (getMultiplier() + 1.5);
+  }
+
+  public void setDamage(double damage) {
+    this.damage = damage;
+  }
+
+  public double getDamage() {
+    return damage;
   }
 }
