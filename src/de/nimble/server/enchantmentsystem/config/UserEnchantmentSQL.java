@@ -1,5 +1,6 @@
 package de.nimble.server.enchantmentsystem.config;
 
+import de.nimble.server.config.SQLConfig;
 import de.nimble.server.enchantmentsystem.enchants.EnchantmentBuilder;
 import de.nimble.server.enchantmentsystem.enchants.NimbleEnchantment;
 import de.nimble.server.enchantmentsystem.enchants.types.EnchantmentType;
@@ -12,6 +13,8 @@ public class UserEnchantmentSQL extends SQLConfig {
   /*
   TODO if id is given replace/modify enchantment
    */
+
+  private final String TABLE_NAME = "customenchantments";
 
   private static UserEnchantmentSQL config = null;
 
@@ -32,37 +35,31 @@ public class UserEnchantmentSQL extends SQLConfig {
     try {
       Statement stmnt = con.createStatement();
       stmnt.execute(
-          "create table if not exists customenchantments("
+          "create table if not exists " + TABLE_NAME + "("
               + "id integer,"
               + "displayname text not null,"
               + "description text not null,"
               + "type text not null,"
               + "multiplier real)");
       stmnt.close();
-      con.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
-  }
-
-  public NimbleEnchantment getEnchantment(int id) {
-    return createEnchantment(getConnection(getDBName()), id);
   }
 
   public List<NimbleEnchantment> getEnchantments() {
     List<NimbleEnchantment> enchantments = new ArrayList<>();
     Connection con = getConnection(getDBName());
     try {
-      PreparedStatement ps = con.prepareStatement("select * from customenchantments");
+      PreparedStatement ps = con.prepareStatement("select * from " + TABLE_NAME);
       ResultSet rs = ps.executeQuery();
 
       while (rs.next()) {
-        enchantments.add(createEnchantment(con, rs.getInt("id")));
+        enchantments.add(getEnchantment(rs.getInt("id")));
       }
 
       rs.close();
       ps.close();
-      con.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -70,12 +67,12 @@ public class UserEnchantmentSQL extends SQLConfig {
     return enchantments;
   }
 
-  public NimbleEnchantment createEnchantment(Connection con, int id) {
+  public NimbleEnchantment getEnchantment(int id) {
     return new EnchantmentBuilder()
-        .id(getID(con, id))
-        .displayName(getDisplayName(con, id))
-        .description(getDescription(con, id))
-        .type(getType(con, id))
+        .id(getID(id))
+        .displayName(getDisplayName(id))
+        .description(getDescription(id))
+        .type(getType(id))
         .build();
   }
 
@@ -88,8 +85,8 @@ public class UserEnchantmentSQL extends SQLConfig {
     PreparedStatement ps = null;
 
     try {
-      ps = con.prepareStatement("insert into customenchantments values(?, ?, ?, ?, ?)");
-      ps.setInt(1, updateID(con));
+      ps = con.prepareStatement("insert into " + TABLE_NAME + " values(?, ?, ?, ?, ?)");
+      ps.setInt(1, updateID(TABLE_NAME));
       ps.setString(2, displayName);
       ps.setString(3, description);
       ps.setString(4, type.toString());
@@ -98,107 +95,48 @@ public class UserEnchantmentSQL extends SQLConfig {
       ps.execute();
 
       ps.close();
-      con.close();
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
 
-  public void update(Connection con, String columnName, int id, String value) {
-    PreparedStatement ps = null;
-    try {
-      ps =
-          con.prepareStatement(
-              "update customenchantments set '" + columnName + "' = ? where id = ?");
-      ps.setString(1, value);
-      ps.setInt(2, id);
-
-      ps.execute();
-
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+  public void setID(int id) {
+    update(TABLE_NAME, "id", id, String.valueOf(id));
   }
 
-  public String get(Connection con, String columnName, int id) {
-    try {
-      String query = "select " + columnName + " from customenchantments where id = ?";
-      PreparedStatement ps = con.prepareStatement(query);
-      ps.setInt(1, id);
-
-      ResultSet rs = ps.executeQuery();
-
-      while (rs.next()) {
-        return rs.getString(columnName);
-      }
-
-      rs.close();
-      ps.close();
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
-    return "No displayName";
+  public int getID(int id) {
+    return Integer.parseInt(String.valueOf(get(TABLE_NAME , "id", id)));
   }
 
-  public int updateID(Connection con) {
-    Statement st = null;
-    ResultSet rs = null;
-    try {
-      st = con.createStatement();
-      rs = st.executeQuery("select max(id) from customenchantments");
-      while (rs.next()) {
-        return rs.getInt("max(id)") + 1;
-      }
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-    } finally {
-      try {
-        rs.close();
-        st.close();
-      } catch (SQLException throwables) {
-        throwables.printStackTrace();
-      }
-    }
-    return -1;
+  public void setDisplayName(int id, String displayName) {
+    update(TABLE_NAME, "displayname", id, displayName);
   }
 
-  public void setID(Connection con, int id) {
-    update(con, "id", id, String.valueOf(id));
+  public String getDisplayName(int id) {
+    return String.valueOf(get(TABLE_NAME, "displayname", id));
   }
 
-  public int getID(Connection con, int id) {
-    return Integer.parseInt(get(con, "id", id));
+  public void setType(int id, EnchantmentType type) {
+    update(TABLE_NAME, "type", id, type.toString());
   }
 
-  public void setDisplayName(Connection con, int id, String displayName) {
-    update(con, "displayname", id, displayName);
+  public EnchantmentType getType(int id) {
+    return EnchantmentType.getTypeByName(String.valueOf(get(TABLE_NAME, "type", id)));
   }
 
-  public String getDisplayName(Connection con, int id) {
-    return get(con, "displayname", id);
+  public void setDescription(int id, String description) {
+    update(TABLE_NAME, "description", id, description);
   }
 
-  public void setType(Connection con, int id, EnchantmentType type) {
-    update(con, "type", id, type.toString());
+  public String getDescription(int id) {
+    return String.valueOf(get(TABLE_NAME, "description", id));
   }
 
-  public EnchantmentType getType(Connection con, int id) {
-    return EnchantmentType.getTypeByName(get(con, "type", id));
+  public void setMultiplier(int id, double multiplier) {
+    update(TABLE_NAME, "multiplier", id, String.valueOf(multiplier));
   }
 
-  public void setDescription(Connection con, int id, String description) {
-    update(con, "description", id, description);
-  }
-
-  public String getDescription(Connection con, int id) {
-    return get(con, "description", id);
-  }
-
-  public void setMultiplier(Connection con, int id, double multiplier) {
-    update(con, "multiplier", id, String.valueOf(multiplier));
-  }
-
-  public double getMultiplier(Connection con, int id) {
-    return Double.parseDouble(get(con, "multiplier", id));
+  public double getMultiplier(int id) {
+    return Double.parseDouble(String.valueOf(get(TABLE_NAME, "multiplier", id)));
   }
 }
