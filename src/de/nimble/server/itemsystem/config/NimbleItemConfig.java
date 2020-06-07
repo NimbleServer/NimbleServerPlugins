@@ -6,10 +6,8 @@ import java.util.List;
 
 import org.bukkit.Material;
 
-import de.nimble.server.NimbleServer;
 import de.nimble.server.config.Config;
 import de.nimble.server.customtags.NimbleTag;
-import de.nimble.server.enchantmentsystem.enchants.Enchantment;
 
 public class NimbleItemConfig extends Config {
 	
@@ -63,8 +61,8 @@ public class NimbleItemConfig extends Config {
 		List<String> names = getFileConfiguration().getStringList(itemName + ".enchantments");
 		
 		for(String name : names) {
-			Enchantment enchantment = NimbleServer.userEnchantmentConfig.getEnchantmentByName(name);
-			enchantments.add(enchantment);
+			// Enchantment enchantment = NimbleServer.userEnchantmentConfig.getEnchantmentByName(name);
+			// enchantments.add(enchantment);
 		}
 		
 		return enchantments;
