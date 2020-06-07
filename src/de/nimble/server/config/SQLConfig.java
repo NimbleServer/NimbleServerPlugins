@@ -1,4 +1,4 @@
-package de.nimble.server.enchantmentsystem.config;
+package de.nimble.server.config;
 
 import de.nimble.server.sql.NimbleConnection;
 
