@@ -11,16 +11,7 @@ public class Config {
 	
 	protected File file;
 	protected FileConfiguration fc;
-	protected String fileName; 
-	
-//	private static Config config = null;
-//	
-//	public final static Config getInstance() {
-//		if(config == null) {
-//			config = new Config("");
-//		}
-//		return config;
-//	}
+	protected String fileName;
 	
 	public Config(String fileName) {
 		this.fileName = fileName;
