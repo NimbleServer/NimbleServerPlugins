@@ -1,5 +1,6 @@
 package de.nimble.server.itemsystem.items;
 
+import de.nimble.server.NimbleLogger;
 import de.nimble.server.NimbleServer;
 import de.nimble.server.enchantmentsystem.enchants.NimbleEnchantment;
 import org.bukkit.inventory.ItemStack;
@@ -20,12 +21,10 @@ public class NimbleItemCreator {
     ItemStack item = new ItemStack(nItem.getMaterial());
     ItemMeta meta = item.getItemMeta();
     meta.setDisplayName(nItem.getDisplayName());
-
     List<String> lore = new ArrayList<>();
     lore.add("Type: " + nItem.getType().toString());
     lore.add(nItem.getDescription());
     lore.add("ID: " + nItem.getID());
-    System.out.println(nItem.getEnchantments());
     for (NimbleEnchantment enchantment : nItem.getEnchantments()) {
       lore.add(enchantment.getDisplayName());
     }
