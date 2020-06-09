@@ -46,9 +46,9 @@ public class Config {
 
   protected void setFile() {
     if (this.fileName != null && (!(this.fileName.equals("")))) {
-      this.file = new File("plugins/enchantments/", fileName + ".yml");
+      this.file = new File("plugins/", fileName + ".yml");
     } else {
-      this.file = new File("plugins/enchantments/defaultConfig.yml");
+      this.file = new File("plugins/defaultConfig.yml");
     }
   }
 
