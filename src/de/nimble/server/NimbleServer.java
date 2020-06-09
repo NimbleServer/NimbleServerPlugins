@@ -2,6 +2,8 @@ package de.nimble.server;
 
 import de.nimble.server.enchantmentsystem.config.NimbleEnchantmentConfig;
 import de.nimble.server.events.AttackEvent;
+import de.nimble.server.events.NimbleInventoryClickEvent;
+import de.nimble.server.itemsystem.commands.NimbleEnchantmentTableCommand;
 import de.nimble.server.itemsystem.commands.NimbleItemCommand;
 import de.nimble.server.itemsystem.config.NimbleItemSql;
 import de.nimble.server.itemsystem.items.ItemManager;
@@ -46,11 +48,13 @@ public class NimbleServer extends JavaPlugin {
 
   private void registerEvents(PluginManager pm) {
     pm.registerEvents(new AttackEvent(), this);
+    pm.registerEvents(new NimbleInventoryClickEvent(), this);
   }
 
   private void loadCommands() {
     getCommand("enchantments").setExecutor(new EnchantmentCommand());
     getCommand("items").setExecutor(new NimbleItemCommand());
+    getCommand("enchantmenttable").setExecutor(new NimbleEnchantmentTableCommand());
   }
 
   private void loadConfig() {
@@ -79,7 +83,6 @@ public class NimbleServer extends JavaPlugin {
         .getItems()
         .forEach(
             i -> {
-              System.out.println(i.getID());
               itemManager.addItem(i);
             });
   }
