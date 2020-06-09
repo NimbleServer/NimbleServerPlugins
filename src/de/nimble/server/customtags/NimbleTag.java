@@ -1,10 +1,11 @@
 package de.nimble.server.customtags;
 
-import org.bukkit.craftbukkit.v1_14_R1.inventory.CraftItemStack;
+import net.minecraft.server.v1_15_R1.NBTBase;
+import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
-import net.minecraft.server.v1_14_R1.NBTTagCompound;
-import net.minecraft.server.v1_14_R1.NBTTagString;
+import net.minecraft.server.v1_15_R1.NBTTagCompound;
+import net.minecraft.server.v1_15_R1.NBTTagString;
 
 public class NimbleTag {
 	
@@ -17,15 +18,16 @@ public class NimbleTag {
 	}
 	
 	public ItemStack create(ItemStack item) {
-		net.minecraft.server.v1_14_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
+		net.minecraft.server.v1_15_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
+
 		NBTTagCompound itemCompound = (nmsItem.hasTag()) ? nmsItem.getTag() : new NBTTagCompound();
-		itemCompound.set(tagName, new NBTTagString(value));
+		itemCompound.set(tagName, NBTTagString.a(value));
 		nmsItem.setTag(itemCompound);
 		return CraftItemStack.asBukkitCopy(nmsItem);
 	}
 	
 	public static boolean hasTag(ItemStack item, String name) {
-		net.minecraft.server.v1_14_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
+		net.minecraft.server.v1_15_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
 		if(nmsItem.getTag().getString(name) != null && (!(nmsItem.getTag().getString(name).equals("")))) {
 			return true;
 		}
@@ -33,7 +35,7 @@ public class NimbleTag {
 	}
 	
 	public static String getTag(ItemStack item, String name) {
-		net.minecraft.server.v1_14_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
+		net.minecraft.server.v1_15_R1.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
 		if(nmsItem.getTag().getString(name) != null && (!(nmsItem.getTag().getString(name).equals("")))) {
 			return nmsItem.getTag().getString(name);
 		}
