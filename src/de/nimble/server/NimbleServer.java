@@ -1,8 +1,9 @@
 package de.nimble.server;
 
+import de.nimble.server.enchantmentsystem.config.NimbleEnchantmentConfig;
+import de.nimble.server.events.AttackEvent;
 import de.nimble.server.itemsystem.commands.NimbleItemCommand;
 import de.nimble.server.itemsystem.config.NimbleItemSql;
-import de.nimble.server.itemsystem.events.AttackEvent;
 import de.nimble.server.itemsystem.items.ItemManager;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,17 +20,18 @@ public class NimbleServer extends JavaPlugin {
 
   // Enchantment configs
   public static UserEnchantmentSQL userEnchantmentsSql = null;
+  public static NimbleEnchantmentConfig enchantmentConfig = null;
 
   // Item configs
   public static NimbleItemSql itemSql = null;
 
   public void onEnable() {
     init();
-    System.out.println("NimbleServer loaded");
+    NimbleLogger.getInstance().log("Successfully enabled");
   }
 
   public void onDisable() {
-    System.out.println("NimbleServer disabled");
+    NimbleLogger.getInstance().log("Disabled");
   }
 
   private void init() {
@@ -59,6 +61,7 @@ public class NimbleServer extends JavaPlugin {
   private void loadConfigFiles() {
     // enchantment configs
     userEnchantmentsSql = UserEnchantmentSQL.getInstance();
+    enchantmentConfig = NimbleEnchantmentConfig.getInstance();
     // item configs
     itemSql = NimbleItemSql.getInstance();
   }
