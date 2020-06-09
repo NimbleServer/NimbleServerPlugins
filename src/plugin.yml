@@ -1,8 +1,8 @@
 name: NimbleServer
-version: 0.0.12
+version: 0.0.13
 description: Nimbles server plugins
 author: nimble
-
+api-version: 1.15
 main: de.nimble.server.NimbleServer
 
 commands:
@@ -14,3 +14,7 @@ commands:
     usage: /<command>
     description: item command
     aliases: [ic]
+  enchantmenttable:
+    usage: /<command>
+    description: Opens enchantment table
+    aliases: [et]
