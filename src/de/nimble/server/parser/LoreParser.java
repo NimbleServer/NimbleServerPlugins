@@ -1,6 +1,8 @@
 package de.nimble.server.parser;
 
+import de.nimble.server.NimbleLogger;
 import de.nimble.server.enchantmentsystem.enchants.types.EnchantmentType;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
@@ -29,16 +31,29 @@ public class LoreParser {
     loadComponentsToMap();
   }
 
+  /**
+   * Initializes the <b>HashMap</b> for the values and loads the values of the <b>Lore</b> to the
+   * Map <br>
+   * TODO: Produces error because something is null
+   *
+   * @param item ItemStack you want to read the lore of
+   */
   public LoreParser(ItemStack item) {
-    if (item != null) {
-      this.values = new HashMap<>();
+
+    this.values = new HashMap<>();
+    if (item == null || item.getType() == Material.AIR) {
+      NimbleLogger.getInstance().log("Item is null or material is air");
+    } else {
       if (item.getItemMeta().getLore() != null) {
         this.lore = item.getItemMeta().getLore();
         loadComponentsToMap();
+      } else {
+        NimbleLogger.getInstance().log("LoreParser: Lore is null");
       }
     }
   }
 
+  /** parses lore into its different components */
   private void loadComponentsToMap() {
     for (String line : lore) {
       if (line.contains("ID")) {
@@ -55,7 +70,13 @@ public class LoreParser {
   }
 
   public int getID() {
-    return Integer.parseInt(String.valueOf(values.get("id"))); // ugly af
+    String idStr = String.valueOf(values.get("id"));
+    if (idStr.equals("null")) {
+      return -1;
+    } else {
+      int id = Integer.parseInt(idStr);
+      return id; // ugly af
+    }
   }
 
   public String getDescription() {
