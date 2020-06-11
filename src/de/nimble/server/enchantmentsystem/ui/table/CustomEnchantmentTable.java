@@ -17,8 +17,9 @@ public class CustomEnchantmentTable extends NimbleWindow {
         NimbleServer.enchantmentConfig.getEnchantmentTableSize(),
         NimbleServer.enchantmentConfig.getWindowDisplay());
   }
-  /*
+  /**
    * Checks if item on cursor is NimbleItem
+   * @param event InventoryClickEvent to detect clicks of the inventory
    */
   @Override
   public void onClick(InventoryClickEvent event) {
