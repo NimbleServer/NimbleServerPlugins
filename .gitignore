@@ -10,3 +10,4 @@ blubb/*
 .idea/*
 *.iml
 src/META-INF/*
+src/de/nimble/server/sql/Test.java
