@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class NimbleConnection {
 	
-	public static Connection getConnection(String path) {
+	public static Connection getConnection() {
 		try {
-			return DriverManager.getConnection("jdbc:sqlite:" + path + ".db");
+			return DriverManager.getConnection("jdbc:sqlite:NimbleServer.db");
 		} catch(SQLException e) {
 			e.printStackTrace();
 		}
