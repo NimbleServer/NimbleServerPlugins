@@ -6,6 +6,7 @@ import de.nimble.server.enchantmentsystem.enchants.NimbleEnchantment;
 import de.nimble.server.itemsystem.items.NimbleItem;
 import de.nimble.server.itemsystem.items.types.NimbleItemType;
 import de.nimble.server.itemsystem.items.types.WeaponItem;
+import de.nimble.server.sql.NimbleConnection;
 import org.bukkit.Material;
 
 import java.sql.*;
@@ -27,14 +28,15 @@ public class NimbleItemSql extends SQLConfig {
   }
 
   private NimbleItemSql() {
-    super("CustomItems");
+    super();
   }
 
   @Override
   public void createTable() {
-    Connection con = getConnection(getDBName());
+    Connection con = NimbleConnection.getConnection();
+    Statement stmnt = null;
     try {
-      Statement stmnt = con.createStatement();
+      stmnt = con.createStatement();
       stmnt.execute(
           "create table if not exists "
               + TABLE_NAME
@@ -49,17 +51,31 @@ public class NimbleItemSql extends SQLConfig {
       con.close();
     } catch (SQLException e) {
       e.printStackTrace();
+    } finally {
+      try {
+        if (stmnt != null) {
+          stmnt.close();
+        }
+        if (con != null) {
+          con.close();
+        }
+      } catch (SQLException throwables) {
+        throwables.printStackTrace();
+      }
     }
   }
 
   public NimbleItem getItem(int id) {
+    Connection con = NimbleConnection.getConnection();
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
     NimbleItem item = null;
+
     try {
-      PreparedStatement ps =
-          getConnection("CustomItems")
-              .prepareStatement("select * from " + TABLE_NAME + " where id = ?");
+      ps = con.prepareStatement("select * from " + TABLE_NAME + " where id = ?");
       ps.setInt(1, id);
-      ResultSet rs = ps.executeQuery();
+      rs = ps.executeQuery();
 
       while (rs.next()) {
 
@@ -83,46 +99,73 @@ public class NimbleItemSql extends SQLConfig {
         for (NimbleEnchantment e : getEnchantmentsFromString(rs.getString("enchantments"))) {
           item.addEnchantment(e);
         }
-
-        rs.close();
-        ps.close();
       }
 
     } catch (SQLException throwables) {
       throwables.printStackTrace();
+    } finally {
+      try {
+        if (rs != null) {
+          rs.close();
+        }
+        if (ps != null) {
+          ps.close();
+        }
+        if (con != null) {
+          con.close();
+        }
+      } catch (SQLException throwables) {
+        throwables.printStackTrace();
+      }
     }
     return item;
   }
 
   public List<NimbleItem> getItems() {
+    Connection con = NimbleConnection.getConnection();
+    Statement stmnt = null;
+    ResultSet rs = null;
     List<NimbleItem> items = new ArrayList<>();
     try {
-      Statement st = getConnection("CustomItems").createStatement();
-      ResultSet rs = st.executeQuery("select * from " + TABLE_NAME);
+      stmnt = con.createStatement();
+      rs = stmnt.executeQuery("select * from " + TABLE_NAME);
 
       while (rs.next()) {
         items.add(getItem(rs.getInt("id")));
       }
 
-      st.close();
     } catch (SQLException throwables) {
       throwables.printStackTrace();
+    } finally {
+      try {
+        if (stmnt != null) {
+          stmnt.close();
+        }
+        if (rs != null) {
+          rs.close();
+        }
+        if (con != null) {
+          con.close();
+        }
+      } catch (SQLException throwables) {
+        throwables.printStackTrace();
+      }
     }
 
     return items;
   }
 
   public void createNewItem(
-      Connection con,
       String displayName,
       String description,
       NimbleItemType type,
       String enchantments,
       String material) {
+    Connection con = NimbleConnection.getConnection();
+    PreparedStatement ps = null;
 
     try {
-      PreparedStatement ps =
-          con.prepareStatement("insert into customitems values(?, ?, ?, ?, ?, ?)");
+      ps = con.prepareStatement("insert into customitems values(?, ?, ?, ?, ?, ?)");
       ps.setInt(1, updateID(TABLE_NAME));
       ps.setString(2, displayName);
       ps.setString(3, description);
@@ -135,6 +178,17 @@ public class NimbleItemSql extends SQLConfig {
       ps.close();
     } catch (SQLException throwables) {
       throwables.printStackTrace();
+    } finally {
+      try {
+        if (ps != null) {
+          ps.close();
+        }
+        if (con != null) {
+          con.close();
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
   }
 
