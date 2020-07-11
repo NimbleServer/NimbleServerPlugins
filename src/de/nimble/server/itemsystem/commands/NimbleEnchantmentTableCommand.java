@@ -17,7 +17,6 @@ public class NimbleEnchantmentTableCommand implements CommandExecutor {
       return true;
     }
     Player player = (Player) cs;
-
     CustomEnchantmentTable window = new CustomEnchantmentTable();
     window.open(player);
 
