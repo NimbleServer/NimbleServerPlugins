@@ -1,5 +1,8 @@
 package de.nimble.server.enchantmentsystem.enchants;
 
+import de.nimble.server.parser.LoreParser;
+import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +51,11 @@ public class EnchantmentManager {
 
   public List<NimbleEnchantment> getEnchantments() {
     return this.enchantments;
+  }
+
+  public boolean isNimbleEnchantment(ItemStack item) {
+    LoreParser parser = new LoreParser(item);
+    return getEnchantment(parser.getID()) != null;
   }
 
   public void clear() {
