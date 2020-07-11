@@ -4,6 +4,7 @@ import de.nimble.server.config.SQLConfig;
 import de.nimble.server.enchantmentsystem.enchants.EnchantmentBuilder;
 import de.nimble.server.enchantmentsystem.enchants.NimbleEnchantment;
 import de.nimble.server.enchantmentsystem.enchants.types.EnchantmentType;
+import de.nimble.server.sql.NimbleConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,42 +27,62 @@ public class UserEnchantmentSQL extends SQLConfig {
   }
 
   private UserEnchantmentSQL() {
-    super("UserEnchantments");
+    super();
   }
 
   @Override
   public void createTable() {
-    Connection con = getConnection(getDBName());
+    Connection con = NimbleConnection.getConnection();
+    Statement stmnt = null;
     try {
-      Statement stmnt = con.createStatement();
+      stmnt = con.createStatement();
       stmnt.execute(
-          "create table if not exists " + TABLE_NAME + "("
+          "create table if not exists "
+              + TABLE_NAME
+              + "("
               + "id integer,"
               + "displayname text not null,"
               + "description text not null,"
               + "type text not null,"
               + "multiplier real)");
-      stmnt.close();
     } catch (SQLException e) {
       e.printStackTrace();
+    } finally {
+      try {
+        if (stmnt != null) {
+          stmnt.close();
+        }
+        if (con != null) {
+          con.close();
+        }
+      } catch (SQLException throwables) {
+        throwables.printStackTrace();
+      }
     }
   }
 
   public List<NimbleEnchantment> getEnchantments() {
     List<NimbleEnchantment> enchantments = new ArrayList<>();
-    Connection con = getConnection(getDBName());
+    Connection con = NimbleConnection.getConnection();
+    PreparedStatement ps = null;
+    ResultSet rs = null;
     try {
-      PreparedStatement ps = con.prepareStatement("select * from " + TABLE_NAME);
-      ResultSet rs = ps.executeQuery();
+      ps = con.prepareStatement("select * from " + TABLE_NAME);
+      rs = ps.executeQuery();
 
       while (rs.next()) {
         enchantments.add(getEnchantment(rs.getInt("id")));
       }
-
-      rs.close();
-      ps.close();
     } catch (SQLException e) {
       e.printStackTrace();
+    } finally {
+      try {
+        rs.close();
+        ps.close();
+        con.close();
+      } catch (SQLException throwables) {
+        throwables.printStackTrace();
+      }
     }
 
     return enchantments;
@@ -77,11 +98,11 @@ public class UserEnchantmentSQL extends SQLConfig {
   }
 
   public void createNewEnchantment(
-      Connection con,
       String displayName,
       String description,
       EnchantmentType type,
       double multiplier) {
+    Connection con = NimbleConnection.getConnection();
     PreparedStatement ps = null;
 
     try {
@@ -93,10 +114,15 @@ public class UserEnchantmentSQL extends SQLConfig {
       ps.setDouble(5, multiplier);
 
       ps.execute();
-
-      ps.close();
     } catch (SQLException e) {
       e.printStackTrace();
+    } finally {
+      try {
+        ps.close();
+        con.close();
+      } catch (SQLException throwables) {
+        throwables.printStackTrace();
+      }
     }
   }
 
@@ -105,7 +131,7 @@ public class UserEnchantmentSQL extends SQLConfig {
   }
 
   public int getID(int id) {
-    return Integer.parseInt(String.valueOf(get(TABLE_NAME , "id", id)));
+    return Integer.parseInt(String.valueOf(get(TABLE_NAME, "id", id)));
   }
 
   public void setDisplayName(int id, String displayName) {
