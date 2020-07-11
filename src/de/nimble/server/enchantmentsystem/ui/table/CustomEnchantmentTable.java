@@ -11,7 +11,17 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 
 public class CustomEnchantmentTable extends NimbleWindow {
-
+  /* TODO replace this version with a version that looks more like an enchantment table
+   * so you open a window and can insert some custom item and it will be enchanted with some custom enchantment
+   * will cost some ingame currency/levels(don't know yet) and you have different kind of levels
+   * Level 1:
+   *  - cost: 3 ingame currency
+   *  - reward: level 1-3 enchantments and different chances to get them
+   * Level 2:
+   *  - cost: 5 ingame currency:
+   *  - reward: 1-10 enchantments and higher chances to get higher levels or more rare enchantments
+   * etc
+   */
   public CustomEnchantmentTable() {
     super(
         NimbleServer.enchantmentConfig.getEnchantmentTableSize(),
