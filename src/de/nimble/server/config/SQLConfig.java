@@ -6,17 +6,14 @@ import java.sql.*;
 
 public abstract class SQLConfig {
 
-  private String dbName;
-  private Connection con;
-
-  public SQLConfig(String dbName) {
-    this.dbName = dbName;
+  public SQLConfig() {
     createTable();
   }
 
   public abstract void createTable();
 
   public int updateID(String tableName) {
+    Connection con = NimbleConnection.getConnection();
     Statement st = null;
     ResultSet rs = null;
     try {
@@ -31,6 +28,7 @@ public abstract class SQLConfig {
       try {
         rs.close();
         st.close();
+        con.close();
       } catch (SQLException throwables) {
         throwables.printStackTrace();
       }
@@ -39,6 +37,7 @@ public abstract class SQLConfig {
   }
 
   public void update(String tableName, String columnName, int id, String value) {
+    Connection con = NimbleConnection.getConnection();
     PreparedStatement ps = null;
     try {
       ps =
@@ -48,13 +47,20 @@ public abstract class SQLConfig {
       ps.setInt(2, id);
 
       ps.execute();
-
     } catch (SQLException e) {
       e.printStackTrace();
+    } finally {
+      try {
+        ps.close();
+        con.close();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
   }
 
   public Object get(String tableName, String columnName, int id) {
+    Connection con = NimbleConnection.getConnection();
     try {
       String query = "select " + columnName + " from " + tableName + " where id = ?";
       PreparedStatement ps = con.prepareStatement(query);
@@ -70,24 +76,9 @@ public abstract class SQLConfig {
       ps.close();
     } catch (SQLException e) {
       e.printStackTrace();
+    } finally {
+
     }
     return null;
-  }
-
-  public void initConnection() {
-    this.con = NimbleConnection.getConnection(dbName);
-  }
-
-  public Connection getConnection(String dbName) {
-    initConnection();
-    return con;
-  }
-
-  public void setDBName(String dbName) {
-    this.dbName = dbName;
-  }
-
-  public String getDBName() {
-    return this.dbName;
   }
 }
