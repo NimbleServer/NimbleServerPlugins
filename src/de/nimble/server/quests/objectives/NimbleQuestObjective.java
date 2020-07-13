@@ -2,24 +2,26 @@ package de.nimble.server.quests.objectives;
 
 public class NimbleQuestObjective {
 
-  private String questId;
-  private NimbleQuestObjectiveType type;
+  private int id;
+  private int questId;
   private int amount;
+  private String name;
+  private NimbleQuestObjectiveType type;
 
-  public void setQuestId(String questId) {
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public int getId() {
+    return this.id;
+  }
+
+  public void setQuestId(int questId) {
     this.questId = questId;
   }
 
-  public String getQuestId() {
+  public int getQuestId() {
     return questId;
-  }
-
-  public void setType(NimbleQuestObjectiveType type) {
-    this.type = type;
-  }
-
-  public NimbleQuestObjectiveType getType() {
-    return type;
   }
 
   public void setAmount(int amount) {
@@ -28,5 +30,21 @@ public class NimbleQuestObjective {
 
   public int getAmount() {
     return this.amount;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return this.name;
+  }
+
+  public void setType(NimbleQuestObjectiveType type) {
+    this.type = type;
+  }
+
+  public NimbleQuestObjectiveType getType() {
+    return type;
   }
 }
