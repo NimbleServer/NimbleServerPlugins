@@ -1,6 +1,10 @@
 package de.nimble.server.quests;
 
+import de.nimble.server.quests.objectives.NimbleQuestObjective;
 import de.nimble.server.quests.rewards.NimbleQuestReward;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NimbleQuest {
 
@@ -8,10 +12,13 @@ public class NimbleQuest {
 	private String name;
 	private String description;
 	private NimbleQuestType type;
-	private NimbleQuestReward reward;
+	private List<NimbleQuestReward> rewards;
+	private List<NimbleQuestObjective> objectives;
 
 	public NimbleQuest(String name) {
 		this.name = name;
+		this.rewards = new ArrayList<>();
+		this.objectives = new ArrayList<>();
 	}
 
 	public void setId(int id) {
@@ -46,12 +53,28 @@ public class NimbleQuest {
 		return this.type;
 	}
 
-	public void setReward(NimbleQuestReward reward) {
-		this.reward = reward;
+	public void addReward(NimbleQuestReward reward) {
+		this.rewards.add(reward);
 	}
 
-	public NimbleQuestReward getReward() {
-		return this.reward;
+	public void setRewards(List<NimbleQuestReward> rewards) {
+		this.rewards = rewards;
+	}
+
+	public List<NimbleQuestReward> getRewards() {
+		return this.rewards;
+	}
+
+	public void addObjective(NimbleQuestObjective objective) {
+		this.objectives.add(objective);
+	}
+
+	public void setObjectives(List<NimbleQuestObjective> objectives) {
+		this.objectives = objectives;
+	}
+
+	public List<NimbleQuestObjective> getObjectives() {
+		return this.objectives;
 	}
 
 }
