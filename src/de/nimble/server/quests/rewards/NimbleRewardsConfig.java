@@ -19,7 +19,9 @@ public class NimbleRewardsConfig extends SQLConfig {
   public void createTable() {
     Connection con = NimbleConnection.getConnection();
     Statement stmnt = null;
-    String query = "create table " + TABLE_NAME + "(" + "quest_id text," + ")";
+    String query = "create table " + TABLE_NAME + "("
+        + "quest_id text,"
+        + ")";
     try {
       stmnt = con.createStatement();
       stmnt.executeQuery(query);
@@ -53,7 +55,7 @@ public class NimbleRewardsConfig extends SQLConfig {
         if (ps != null) {
           ps.close();
         }
-        if(con != null) {
+        if (con != null) {
           con.close();
         }
       } catch (SQLException e) {
