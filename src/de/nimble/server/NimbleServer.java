@@ -7,6 +7,9 @@ import de.nimble.server.itemsystem.commands.NimbleEnchantmentTableCommand;
 import de.nimble.server.itemsystem.commands.NimbleItemCommand;
 import de.nimble.server.itemsystem.config.NimbleItemSql;
 import de.nimble.server.itemsystem.items.ItemManager;
+import de.nimble.server.quests.NimbleQuestConfig;
+import de.nimble.server.quests.objectives.NimbleQuestObjectivesConfig;
+import de.nimble.server.quests.rewards.NimbleQuestRewardsConfig;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -26,6 +29,11 @@ public class NimbleServer extends JavaPlugin {
 
   // Item configs
   public static NimbleItemSql itemSql = null;
+
+  // Quest configs
+  public static NimbleQuestConfig questConfig = null;
+  public static NimbleQuestObjectivesConfig questObjectivesConfig = null;
+  public static NimbleQuestRewardsConfig questRewardsConfig = null;
 
   public void onEnable() {
     init();
@@ -68,6 +76,10 @@ public class NimbleServer extends JavaPlugin {
     enchantmentConfig = NimbleEnchantmentConfig.getInstance();
     // item configs
     itemSql = NimbleItemSql.getInstance();
+    // quests
+    questConfig = NimbleQuestConfig.getInstance();
+    questObjectivesConfig = NimbleQuestObjectivesConfig.getInstance();
+    questRewardsConfig = NimbleQuestRewardsConfig.getInstance();
   }
 
   private void loadManager() {
