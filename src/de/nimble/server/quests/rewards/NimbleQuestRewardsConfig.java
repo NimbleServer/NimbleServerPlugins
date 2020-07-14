@@ -7,12 +7,20 @@ import de.nimble.server.sql.NimbleConnection;
 import java.sql.*;
 import java.util.List;
 
-public class NimbleRewardsConfig extends SQLConfig {
+public class NimbleQuestRewardsConfig extends SQLConfig {
 
   private final String TABLE_NAME = "questrewards";
+  private static NimbleQuestRewardsConfig config;
 
-  public NimbleRewardsConfig() {
+  private NimbleQuestRewardsConfig() {
     super();
+  }
+
+  public static NimbleQuestRewardsConfig getInstance() {
+    if(config == null) {
+      config = new NimbleQuestRewardsConfig();
+    }
+    return config;
   }
 
   @Override

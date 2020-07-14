@@ -11,9 +11,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NimbleQuestsConfig extends SQLConfig {
+public class NimbleQuestConfig extends SQLConfig {
 
   private final String TABLE_NAME = "nimblequests";
+  private static NimbleQuestConfig config;
+
+  private NimbleQuestConfig() {
+    super();
+  }
+
+  public static NimbleQuestConfig getInstance() {
+    if(config == null) {
+      config = new NimbleQuestConfig();
+    }
+    return config;
+  }
 
   @Override
   public void createTable() {
