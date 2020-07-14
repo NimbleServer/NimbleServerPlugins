@@ -13,6 +13,18 @@ import java.util.List;
 public class NimbleQuestObjectivesConfig extends SQLConfig {
 
   private final String TABLE_NAME = "nimblequestobjectives";
+  private static NimbleQuestObjectivesConfig config;
+
+  private NimbleQuestObjectivesConfig() {
+    super();
+  }
+
+  public static NimbleQuestObjectivesConfig getInstance() {
+    if(config == null) {
+      config = new NimbleQuestObjectivesConfig();
+    }
+    return config;
+  }
 
   @Override
   public void createTable() {
