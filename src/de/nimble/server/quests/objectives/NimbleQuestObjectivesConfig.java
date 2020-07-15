@@ -20,7 +20,7 @@ public class NimbleQuestObjectivesConfig extends SQLConfig {
   }
 
   public static NimbleQuestObjectivesConfig getInstance() {
-    if(config == null) {
+    if (config == null) {
       config = new NimbleQuestObjectivesConfig();
     }
     return config;
