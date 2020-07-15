@@ -21,7 +21,7 @@ public class NimbleQuestConfig extends SQLConfig {
   }
 
   public static NimbleQuestConfig getInstance() {
-    if(config == null) {
+    if (config == null) {
       config = new NimbleQuestConfig();
     }
     return config;

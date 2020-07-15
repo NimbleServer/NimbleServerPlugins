@@ -6,75 +6,76 @@ import de.nimble.server.quests.rewards.NimbleQuestReward;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NimbleQuest {
+public abstract class NimbleQuest {
 
-	private int id;
-	private String name;
-	private String description;
-	private NimbleQuestType type;
-	private List<NimbleQuestReward> rewards;
-	private List<NimbleQuestObjective> objectives;
+  private int id;
+  private String name;
+  private String description;
+  private NimbleQuestType type;
+  private List<NimbleQuestReward> rewards;
+  private List<NimbleQuestObjective> objectives;
 
-	public NimbleQuest(String name) {
-		this.name = name;
-		this.rewards = new ArrayList<>();
-		this.objectives = new ArrayList<>();
-	}
+  public NimbleQuest(String name) {
+    this.name = name;
+    this.rewards = new ArrayList<>();
+    this.objectives = new ArrayList<>();
+  }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+  public abstract void onFinish();
 
-	public int getId() {
-		return this.id;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public int getId() {
+    return this.id;
+  }
 
-	public String getName() {
-		return this.name;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+  public String getName() {
+    return this.name;
+  }
 
-	public String getDescription() {
-		return this.description;
-	}
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-	public void setType(NimbleQuestType type) {
-		this.type = type;
-	}
+  public String getDescription() {
+    return this.description;
+  }
 
-	public NimbleQuestType getType() {
-		return this.type;
-	}
+  public void setType(NimbleQuestType type) {
+    this.type = type;
+  }
 
-	public void addReward(NimbleQuestReward reward) {
-		this.rewards.add(reward);
-	}
+  public NimbleQuestType getType() {
+    return this.type;
+  }
 
-	public void setRewards(List<NimbleQuestReward> rewards) {
-		this.rewards = rewards;
-	}
+  public void addReward(NimbleQuestReward reward) {
+    this.rewards.add(reward);
+  }
 
-	public List<NimbleQuestReward> getRewards() {
-		return this.rewards;
-	}
+  public void setRewards(List<NimbleQuestReward> rewards) {
+    this.rewards = rewards;
+  }
 
-	public void addObjective(NimbleQuestObjective objective) {
-		this.objectives.add(objective);
-	}
+  public List<NimbleQuestReward> getRewards() {
+    return this.rewards;
+  }
 
-	public void setObjectives(List<NimbleQuestObjective> objectives) {
-		this.objectives = objectives;
-	}
+  public void addObjective(NimbleQuestObjective objective) {
+    this.objectives.add(objective);
+  }
 
-	public List<NimbleQuestObjective> getObjectives() {
-		return this.objectives;
-	}
+  public void setObjectives(List<NimbleQuestObjective> objectives) {
+    this.objectives = objectives;
+  }
 
+  public List<NimbleQuestObjective> getObjectives() {
+    return this.objectives;
+  }
 }
