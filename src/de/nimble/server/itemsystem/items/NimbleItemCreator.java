@@ -3,6 +3,7 @@ package de.nimble.server.itemsystem.items;
 import de.nimble.server.NimbleLogger;
 import de.nimble.server.NimbleServer;
 import de.nimble.server.enchantmentsystem.enchants.NimbleEnchantment;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
