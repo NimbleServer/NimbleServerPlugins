@@ -1,5 +1,7 @@
 package de.nimble.server.quests.rewards;
 
+import de.nimble.server.player.NimblePlayer;
+
 public abstract class NimbleQuestReward {
 
   private int id;
@@ -7,7 +9,7 @@ public abstract class NimbleQuestReward {
   private String name;
   private NimbleQuestRewardType type;
 
-  public abstract void onReward();
+  public abstract void onReward(NimblePlayer player);
 
   public int getId() {
     return id;
