@@ -8,7 +8,6 @@ public enum NimbleQuestRewardType {
 	EXPERIENCE((byte) 2),
 	CURRENCY((byte) 3);
 
-
 	private byte id;
 
 	NimbleQuestRewardType(byte id) {

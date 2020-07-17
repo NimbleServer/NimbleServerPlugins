@@ -54,7 +54,7 @@ public class NimbleQuestRewardsConfig extends SQLConfig {
     }
   }
 
-  public void createReward(int id, int questId, String name, NimbleQuestRewardType type) {
+  public void create(int id, int questId, String name, NimbleQuestRewardType type) {
     Connection con = NimbleConnection.getConnection();
     PreparedStatement ps = null;
     try {
@@ -68,7 +68,7 @@ public class NimbleQuestRewardsConfig extends SQLConfig {
     }
   }
 
-  public NimbleQuestReward getRewardById(int id) {
+  public NimbleQuestReward getById(int id) {
     NimbleQuestReward reward = null;
     Connection con = NimbleConnection.getConnection();
     PreparedStatement ps = null;
@@ -118,7 +118,7 @@ public class NimbleQuestRewardsConfig extends SQLConfig {
     return reward;
   }
 
-  public List<NimbleQuestReward> getRewardsByQuestId(int questId) {
+  public List<NimbleQuestReward> getByQuestId(int questId) {
     List<NimbleQuestReward> rewards = new ArrayList<>();
     Connection con = NimbleConnection.getConnection();
     PreparedStatement ps = null;
