@@ -57,7 +57,7 @@ public class NimbleQuestObjectivesConfig extends SQLConfig {
     }
   }
 
-  public List<NimbleQuestObjective> getObjectivesByQuestId(int questId) {
+  public List<NimbleQuestObjective> getByQuestId(int questId) {
     List<NimbleQuestObjective> objectives = new ArrayList<>();
     Connection con = NimbleConnection.getConnection();
     PreparedStatement ps = null;
@@ -142,7 +142,7 @@ public class NimbleQuestObjectivesConfig extends SQLConfig {
     return objective;
   }
 
-  public void createNewObjective(int questId, int amount, String name, String type) {
+  public void create(int questId, int amount, String name, String type) {
     Connection con = NimbleConnection.getConnection();
     PreparedStatement ps = null;
     try {
