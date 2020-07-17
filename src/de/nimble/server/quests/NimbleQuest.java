@@ -1,5 +1,6 @@
 package de.nimble.server.quests;
 
+import de.nimble.server.player.NimblePlayer;
 import de.nimble.server.quests.objectives.NimbleQuestObjective;
 import de.nimble.server.quests.rewards.NimbleQuestReward;
 
@@ -21,7 +22,7 @@ public abstract class NimbleQuest {
     this.objectives = new ArrayList<>();
   }
 
-  public abstract void onFinish();
+  public abstract void onFinish(NimblePlayer player);
 
   public void setId(int id) {
     this.id = id;
